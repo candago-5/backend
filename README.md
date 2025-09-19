@@ -126,7 +126,7 @@ npm run lint
 ---
 
 ##  Equipe
-- 🤖 <kbd>Nome</kbd>: Guilherme Teixeira — PO / Backend | <kbd>GitHub</kbd>: [@GuilhermeCardoso0](https://github.com/Guilhermecardoso0)
+- 🤖 <kbd>Nome</kbd>: Guilherme Teixeira — PO | <kbd>GitHub</kbd>: [@GuilhermeCardoso0](https://github.com/Guilhermecardoso0)
 - 👨‍💻 <kbd>Nome</kbd>: Caique Moura — SC | <kbd>GitHub</kbd>: [@caiquefrd](https://github.com/caiquefrd)
 - 💻 <kbd>Nome</kbd>: Rafael Soares — Dev | <kbd>GitHub</kbd>: [@RafaelSM21](https://github.com/RafaelSM21)
 - 💻 <kbd>Nome</kbd>: Luis Gustavo — Dev | <kbd>GitHub</kbd>: [@l-gustavo-barbosa](https://github.com/l-gustavo-barbosa)
