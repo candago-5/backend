@@ -1,140 +1,230 @@
-<p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?size=28&duration=4000&color=36BCF7&center=true&vCenter=true&width=600&lines=🐶+Dog+Spotter+;API+em+Nuvem+para+Localizar+C%C3%A3es;Candago+Building+Tech+" alt="Dog Spotter Backend banner">
-</p>
+# 🐶 Dog Spotter API
 
----
+API REST para aplicação Dog Spotter - sistema de registro e localização de cachorros encontrados ou perdidos.
 
-![Repo Views](https://komarev.com/ghpvc/?username=candago-5&repo=backend&label=Views&color=blue&style=flat)
-![GitHub top language](https://img.shields.io/github/languages/top/candago-5/backend?style=flat&color=green)
-![GitHub last commit](https://img.shields.io/github/last-commit/candago-5/backend?color=yellow)
+## 📋 Sobre o Projeto
 
+Dog Spotter é uma API desenvolvida em Node.js/TypeScript que permite aos usuários registrar, buscar e gerenciar informações sobre cachorros encontrados ou perdidos. O sistema utiliza autenticação JWT e armazenamento de imagens para facilitar a identificação e reunião de pets com seus donos.
 
-![TypeScript](https://img.shields.io/badge/-TypeScript-333333?style=flat&logo=typescript)
-![Figma](https://img.shields.io/badge/-Figma-333333?style=flat&logo=figma)
-![React](https://img.shields.io/badge/-React-333333?style=flat&logo=react)
-![Python](https://img.shields.io/badge/-Python-333333?style=flat&logo=python)
-![Node.js](https://img.shields.io/badge/-Node.js-333333?style=flat&logo=node.js)
-![Docker](https://img.shields.io/badge/-Docker-333333?style=flat&logo=docker)
-![Jest](https://img.shields.io/badge/-Jest-333333?style=flat&logo=jest)
+## 🚀 Tecnologias
 
+- **Node.js** - Ambiente de execução JavaScript
+- **TypeScript** - Superset JavaScript com tipagem estática
+- **Express** - Framework web minimalista
+- **Prisma** - ORM para banco de dados
+- **PostgreSQL** - Banco de dados relacional
+- **JWT** - Autenticação baseada em tokens
+- **Bcrypt** - Hash de senhas
+- **Multer** - Upload de arquivos
+- **Azure Blob Storage** - Armazenamento de imagens
+- **Docker** - Containerização
 
+## 📁 Estrutura do Projeto
 
-
----
-
-## ✅ Pré‑requisitos
-- Node.js 18+ e npm (ou pnpm/yarn)
-- Uma base de dados disponível:
-  - PostgreSQL 13+ (recomendado) ou
-  - MongoDB 5+
-- Opcional: Docker e Docker Compose
-
----
-
-## 📂 Estrutura do projeto
-- `src/` — código principal (rotas, controladores, etc.)
-- `routes/` — definição das rotas HTTP
-- `models/` — modelos de dados/ORM/ODM
-- `controllers/` — lógica de negócio
-- `tests/` — testes automatizados
-
-Observação: alguns diretórios podem variar conforme a implementação real.
-
----
-
-## ⚙️ Configuração de ambiente
-1) Copie o arquivo de exemplo e ajuste as variáveis:
-
-```powershell
-Copy-Item .env.example .env
+```
+backend/
+├── src/
+│   ├── config/          # Configurações (database, etc)
+│   ├── middleware/      # Middlewares (autenticação, etc)
+│   ├── routes/          # Rotas da API
+│   ├── services/        # Lógica de negócio
+│   ├── types/           # Definições de tipos TypeScript
+│   └── index.ts         # Arquivo principal
+├── prisma/
+│   ├── schema.prisma    # Schema do banco de dados
+│   └── schema.sql       # SQL complementar
+├── uploads/             # Diretório para arquivos enviados
+├── Dockerfile           # Configuração Docker
+├── package.json         # Dependências do projeto
+└── tsconfig.json        # Configuração TypeScript
 ```
 
-Variáveis importantes (ver `.env.example`):
-- `PORT` — porta do servidor (padrão 3000)
-- `NODE_ENV` — development | production | test
-- `JWT_SECRET` — segredo para assinar tokens
-- Para PostgreSQL: `DATABASE_URL=postgres://USER:PASS@HOST:5432/DB`
-- Para MongoDB: `MONGO_URI=mongodb://USER:PASS@HOST:27017/DB`
-- `CORS_ORIGIN` — origem permitida do frontend
-- `ML_SERVICE_URL` — URL do serviço de ML (opcional)
+## 🛠️ Instalação e Configuração
 
----
+### Pré-requisitos
 
-## ▶️ Como rodar (sem Docker)
-```powershell
-# 1) Instale as dependências
-npm install
+- Node.js 20.x ou superior
+- PostgreSQL 14 ou superior
+- npm ou yarn
 
-# 2) (Opcional) configure o banco localmente
-#    - PostgreSQL: crie o banco definido em DATABASE_URL
-#    - MongoDB: crie a base definida em MONGO_URI
-#    - Execute migrações/seed caso o projeto utilize (ex.: Prisma/Sequelize/Mongoose)
+### Passo a Passo
 
-# 3) Suba a API em modo desenvolvimento
-npm run dev
+1. **Clone o repositório**
+   ```bash
+   git clone <repository-url>
+   cd backend
+   ```
 
-# 4) Acesse a saúde da API
-# GET http://localhost:3000/health
+2. **Instale as dependências**
+   ```bash
+   npm install
+   ```
+
+3. **Configure as variáveis de ambiente**
+   
+   Crie um arquivo `.env` na raiz do projeto com o seguinte conteúdo:
+   
+   ```env
+   # Database
+   DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/dogspotter?sslmode=prefer"
+   
+   # Server
+   PORT=3000
+   NODE_ENV=development
+   
+   # JWT
+   JWT_SECRET=dogspotter_jwt_secret_key_change_in_production_2024
+   
+   # CORS
+   CORS_ORIGIN=*
+   
+   # Azure Blob Storage
+   AZURE_STORAGE_CONNECTION_STRING=mock_connection_string
+   AZURE_STORAGE_CONTAINER_NAME=dog-images
+   ```
+
+4. **Configure o banco de dados**
+   ```bash
+   npm run prisma:generate
+   npm run prisma:push
+   ```
+
+5. **Inicie o servidor de desenvolvimento**
+   ```bash
+   npm run dev
+   ```
+
+   O servidor estará disponível em `http://localhost:3000`
+
+### Setup Rápido
+
+Para instalação completa em um único comando:
+```bash
+npm run setup
 ```
 
----
+## 🐳 Docker
 
-## 🐳 Como rodar (com Docker)
-Se existir um `docker-compose.yml` neste diretório, você pode tentar:
-
-```powershell
-docker compose up --build
+### Build da imagem
+```bash
+docker build -t dog-spotter-api .
 ```
 
-Isso deve subir a API e o banco definidos no compose. Ajuste as variáveis do `.env` conforme necessário.
-
----
-
-## 📘 API (visão geral)
-- Autenticação: Bearer Token (JWT) via header `Authorization: Bearer <token>`
-- Content-Type: `application/json`
-
-Endpoints comuns (exemplo — ajuste conforme implementação real):
-- `GET /health` → `{ "status": "ok" }`
-- `POST /auth/login` → body `{ email, password }` → `{ token }`
-- `GET /dogs` → lista cães
-- `POST /dogs` → cria um cão (requer JWT)
-
-Erros seguem o padrão:
-```json
-{ "error": { "code": "string", "message": "string" } }
+### Executar container
+```bash
+docker run -p 3000:3000 --env-file .env dog-spotter-api
 ```
 
----
+## 📚 Endpoints da API
 
-## 🧪 Testes e qualidade
-```powershell
-# Executar testes (se configurado)
-npm test
+### Autenticação
 
-# Lint (se configurado)
-npm run lint
+- `POST /api/auth/register` - Registrar novo usuário
+- `POST /api/auth/login` - Login de usuário
+- `GET /api/auth/me` - Obter dados do usuário autenticado
+
+### Usuários
+
+- `GET /api/users/:id` - Obter usuário por ID
+- `PUT /api/users/:id` - Atualizar usuário
+- `DELETE /api/users/:id` - Deletar usuário
+
+### Cachorros
+
+- `GET /api/dogs` - Listar todos os cachorros
+- `GET /api/dogs/:id` - Obter cachorro por ID
+- `POST /api/dogs` - Registrar novo cachorro
+- `PUT /api/dogs/:id` - Atualizar cachorro
+- `DELETE /api/dogs/:id` - Deletar cachorro
+
+### Upload
+
+- `POST /api/upload` - Upload de imagem
+
+### Health Check
+
+- `GET /health` - Verificar status da API
+
+## 🔑 Autenticação
+
+A API utiliza autenticação JWT (JSON Web Token). Para acessar rotas protegidas, inclua o token no header:
+
+```
+Authorization: Bearer <seu-token-jwt>
 ```
 
----
+## 💾 Modelo de Dados
 
-## 🤝 Contribuição
-1) Crie uma branch de feature: `git checkout -b feat/minha-feature`
-2) Commit com mensagens claras
-3) Abra um Pull Request descrevendo mudanças e passos de teste
+### User
+- `id`: UUID
+- `email`: String (único)
+- `password`: String (hash)
+- `name`: String (opcional)
+- `avatar`: String (opcional)
+- `createdAt`: DateTime
+- `updatedAt`: DateTime
 
----
+### Dog
+- `id`: UUID
+- `description`: String
+- `imageUrl`: String (opcional)
+- `latitude`: Float
+- `longitude`: Float
+- `breed`: String (opcional)
+- `color`: String (opcional)
+- `size`: String (pequeno, médio, grande)
+- `status`: String (encontrado, perdido, adotado)
+- `userId`: String (FK)
+- `createdAt`: DateTime
+- `updatedAt`: DateTime
 
-##  Equipe
-- 🤖 <kbd>Nome</kbd>: Guilherme Teixeira — PO | <kbd>GitHub</kbd>: [@GuilhermeCardoso0](https://github.com/Guilhermecardoso0)
-- 👨‍💻 <kbd>Nome</kbd>: Caique Moura — SC | <kbd>GitHub</kbd>: [@caiquefrd](https://github.com/caiquefrd)
-- 💻 <kbd>Nome</kbd>: Rafael Soares — Dev | <kbd>GitHub</kbd>: [@RafaelSM21](https://github.com/RafaelSM21)
-- 💻 <kbd>Nome</kbd>: Luis Gustavo — Dev | <kbd>GitHub</kbd>: [@l-gustavo-barbosa](https://github.com/l-gustavo-barbosa)
-- 💻 <kbd>Nome</kbd>: Lucas Jaques — Dev | <kbd>GitHub</kbd>: [@jaqueslucas](https://github.com/jaqueslucas)
-- 💻 <kbd>Nome</kbd>: Lucas Assis — Dev | <kbd>GitHub</kbd>: [@Lucassis1](https://github.com/Lucassis1)
+## 📝 Scripts Disponíveis
 
----
+```bash
+npm run dev              # Inicia servidor de desenvolvimento
+npm run build            # Compila TypeScript para JavaScript
+npm start                # Inicia servidor em produção
+npm run prisma:generate  # Gera Prisma Client
+npm run prisma:migrate   # Executa migrations
+npm run prisma:push      # Push schema para banco de dados
+npm run prisma:studio    # Abre Prisma Studio
+npm run setup            # Setup completo do projeto
+```
 
-<p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?size=24&duration=4000&color=FF5733&center=true&vCenter=true&width=500&lines=+Candago+Building+Tech+" alt="Team signature">
-</p>
+## 🧪 Testando a API
+
+Utilize o arquivo `test.http` incluído no projeto para testar os endpoints. Recomenda-se usar a extensão REST Client do VS Code.
+
+## 🚀 Deploy
+
+### Azure
+
+Consulte o arquivo `azure-deploy.md` para instruções detalhadas de deploy na Azure.
+
+## 🔒 Segurança
+
+- Senhas são hasheadas usando bcrypt
+- Autenticação JWT com expiração configurável
+- CORS configurável por ambiente
+- Validação de entrada em todos os endpoints
+- Em produção, sempre altere o `JWT_SECRET`
+
+## 🤝 Contribuindo
+
+1. Faça fork do projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a branch (`git push origin feature/AmazingFeature`)
+5. Abra um Pull Request
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT.
+
+## 👥 Autor
+
+Desenvolvido por candago-5
+
+## 📞 Suporte
+
+Para questões e suporte, abra uma issue no repositório do GitHub.

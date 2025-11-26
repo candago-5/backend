@@ -1,0 +1,114 @@
+### Dog Spotter API Tests
+### Use Ctrl+Alt+R or click "Send Request" above each request
+
+@baseUrl = http://localhost:3000
+@token = YOUR_TOKEN_HERE
+
+### ==================== HEALTH ====================
+
+### Health Check
+GET {{baseUrl}}/health
+
+### ==================== AUTH ====================
+
+### Register new user
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+    "email": "test@example.com",
+    "password": "123456",
+    "name": "Test User"
+}
+
+### Login (copy the token from response!)
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "test@example.com",
+    "password": "123456"
+}
+
+### Get current user (requires token)
+GET {{baseUrl}}/api/auth/me
+Authorization: Bearer {{token}}
+
+### ==================== DOGS ====================
+
+### List all dogs
+GET {{baseUrl}}/api/dogs
+
+### Get dogs for map
+GET {{baseUrl}}/api/dogs/map
+
+### Search dogs
+GET {{baseUrl}}/api/dogs/search?q=caramelo
+
+### Create a new dog (requires token)
+POST {{baseUrl}}/api/dogs
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "description": "Cachorro caramelo, porte médio, muito dócil, encontrado na praça",
+    "latitude": -23.527,
+    "longitude": -46.933,
+    "breed": "Vira-lata",
+    "color": "Caramelo",
+    "size": "medio",
+    "status": "encontrado"
+}
+
+### Get my dogs (requires token)
+GET {{baseUrl}}/api/dogs/my
+Authorization: Bearer {{token}}
+
+### Get specific dog (replace ID)
+GET {{baseUrl}}/api/dogs/REPLACE_WITH_DOG_ID
+
+### Update a dog (replace ID, requires token)
+PUT {{baseUrl}}/api/dogs/REPLACE_WITH_DOG_ID
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "description": "Cachorro atualizado - já foi adotado!",
+    "status": "adotado"
+}
+
+### Delete a dog (replace ID, requires token)
+DELETE {{baseUrl}}/api/dogs/REPLACE_WITH_DOG_ID
+Authorization: Bearer {{token}}
+
+### ==================== UPLOAD ====================
+
+### Upload image via base64 (requires token)
+POST {{baseUrl}}/api/upload/base64
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "image": "/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRof...",
+    "mimeType": "image/jpeg"
+}
+
+### ==================== USERS ====================
+
+### Get user profile (requires token)
+GET {{baseUrl}}/api/users/me
+Authorization: Bearer {{token}}
+
+### Get user stats (requires token)
+GET {{baseUrl}}/api/users/me/stats
+Authorization: Bearer {{token}}
+
+### Update profile (requires token)
+PUT {{baseUrl}}/api/users/me
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "name": "New Name"
+}
+
